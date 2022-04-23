@@ -1,0 +1,5 @@
+.idea
+
+# Project exclude paths
+/brains_cloud_client/target/
+/brains_cloud_server/target/
