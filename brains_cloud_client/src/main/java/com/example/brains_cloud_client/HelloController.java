@@ -32,13 +32,15 @@ public class HelloController implements Initializable {
     @FXML
     private ListView<String> filesList;
     @FXML
+    private TableColumn filesListName;
+    @FXML
     private Label textSelectedRadio, folderClient;
     @FXML
     private RadioButton downloadRadio, sendRadio, viewRadio, deleteRadio, renameRadio;
     @FXML
-    private TextField userName;
+    private TextField userLogin;
     @FXML
-    private PasswordField userLogin;
+    private PasswordField userPass;
     @FXML
     private VBox loginPanel, vBoxCloud;
     @FXML
@@ -89,6 +91,23 @@ public class HelloController implements Initializable {
                         Files.write(Paths.get("client_storage/" + fm.getFileName()), fm.getData(), StandardOpenOption.CREATE);
                         refreshLocalFilesList();
                     }
+//                    if (am instanceof FileRequest) {
+//                        FileRequest fr = (FileRequest) am;
+//                        if (fr.getFileName().startsWith("_auth")) {
+//                            String[] parts = fr.getFileName().split("\\s");
+//                            boolean authIndex = Boolean.parseBoolean(parts[1]);
+//                            if (authIndex) {
+//                                loginPanel.setVisible(false);
+//                                loginPanel.setManaged(false);
+//                                vBoxCloud.setVisible(true);
+//                                vBoxCloud.setManaged(true);
+//                            } else {
+//
+////                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "не верный логин или пароль");
+////                                alert.showAndWait();
+//                            }
+//                        }
+//                    }
                 }
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
@@ -185,65 +204,88 @@ public class HelloController implements Initializable {
     }
 
     public void login() {
-        if (!userName.getText().trim().isEmpty()) {
-            if (!userLogin.getText().trim().isEmpty()) {
-                String msg = String.format("newLogPass: %s %s %s", userName.getText().trim(), userLogin.getText().trim(), 0);
+        if (!userLogin.getText().trim().isEmpty()) {
+            if (!userPass.getText().trim().isEmpty()) {
+                String msg = String.format("/auth %s %s %s", userLogin.getText().trim(), userPass.getText().trim(), 0);
                 Network.sendMsg(new FileRequest(msg));
-                System.out.println(userName.getText().trim() + " " + userLogin.getText().trim());
+                System.out.println(userLogin.getText().trim() + " " + userPass.getText().trim());
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "не верный логин или пароль");
-                alert.showAndWait();}
+                alert.showAndWait();
+            }
         }
+        try {
+
+                AbstractMessage am = Network.readObject();
+                if (am instanceof FileRequest) {
+                    System.out.println(111111);
+                    FileRequest fr = (FileRequest) am;
+                    if (fr.getFileName().startsWith("_auth")) {
+                        String[] parts = fr.getFileName().split("\\s");
+                        boolean authIndex = Boolean.parseBoolean(parts[1]);
+                        if (authIndex) {
+                            loginPanel.setVisible(false);
+                            loginPanel.setManaged(false);
+                            vBoxCloud.setVisible(true);
+                            vBoxCloud.setManaged(true);
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "не верный логин или пароль");
+                            alert.showAndWait();
+                        }
+                    }
+                }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickHyperlink() {
+        Font font = new Font("Cambria Bold", 16);
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(20, 20, 20, 20));
+
+        Label labelLogin = new Label("Login");
+        labelLogin.setFont(font);
+        TextField singUpLogin = new TextField();
+
+        Label labelPass = new Label("Password");
+        labelPass.setFont(font);
+        PasswordField singUpPass = new PasswordField();
+
+        Button btnEnter = new Button("Enter");
+        btnEnter.setFont(font);
+
+        BorderPane.setMargin(btnEnter, new Insets(35, 0, 0, 0));
+        vBox.getChildren().addAll(labelLogin, singUpLogin, labelPass, singUpPass, btnEnter);
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(vBox);
+        Scene secondScene = new Scene(secondaryLayout, 400, 200);
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Window for sing up");
+        newWindow.setScene(secondScene);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+        //todo сделать окно stage родительским , чтобы newWindow  его блокировало
+        newWindow.show();
+
+
+        btnEnter.setOnAction(event -> {
+            if (!singUpLogin.getText().trim().isEmpty()) {
+                if (!singUpPass.getText().trim().isEmpty()) {
+                    String msg = String.format("/auth %s %s %s", singUpLogin.getText().trim(), singUpPass.getText().trim(), 1);
+                    Network.sendMsg(new FileRequest(msg));
+                    System.out.println(singUpLogin.getText().trim() + " " + singUpPass.getText().trim());
+                }
+            }
+            newWindow.close();
             loginPanel.setVisible(false);
             loginPanel.setManaged(false);
             vBoxCloud.setVisible(true);
             vBoxCloud.setManaged(true);
-        }
 
-        public void onClickHyperlink () {
-            Font font = new Font("Cambria Bold", 16);
-            VBox vBox = new VBox();
-            vBox.setPadding(new Insets(20, 20, 20, 20));
+        });
 
-            Label labelLogin = new Label("Login");
-            labelLogin.setFont(font);
-            TextField singUpLogin = new TextField();
-
-            Label labelPass = new Label("Password");
-            labelPass.setFont(font);
-            PasswordField singUpPass = new PasswordField();
-
-            Button btnEnter = new Button("Enter");
-            btnEnter.setFont(font);
-
-            BorderPane.setMargin(btnEnter, new Insets(35, 0, 0, 0));
-            vBox.getChildren().addAll(labelLogin, singUpLogin, labelPass, singUpPass, btnEnter);
-            StackPane secondaryLayout = new StackPane();
-            secondaryLayout.getChildren().add(vBox);
-            Scene secondScene = new Scene(secondaryLayout, 400, 200);
-            Stage newWindow = new Stage();
-            newWindow.setTitle("Window for sing up");
-            newWindow.setScene(secondScene);
-            newWindow.initModality(Modality.APPLICATION_MODAL);
-            //todo сделать окно stage родительским , чтобы newWindow  его блокировало
-            newWindow.show();
-
-
-            btnEnter.setOnAction(event -> {
-                if (!singUpLogin.getText().trim().isEmpty()) {
-                    if (!singUpPass.getText().trim().isEmpty()) {
-                        String msg = String.format("newLogPass: %s %s %s", singUpLogin.getText().trim(), singUpPass.getText().trim(), 1);
-                        Network.sendMsg(new FileRequest(msg));
-                        System.out.println(singUpLogin.getText().trim() + " " + singUpPass.getText().trim());
-                    }
-                }
-                newWindow.close();
-                loginPanel.setVisible(false);
-                loginPanel.setManaged(false);
-                vBoxCloud.setVisible(true);
-                vBoxCloud.setManaged(true);
-
-            });
-
-        }
     }
+}

@@ -1,5 +1,6 @@
 package com.example.brains_cloud_server;
 
+import com.example.brains_cloud_common.FileRequest;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -29,17 +30,20 @@ public class JDBCConnect implements AuthService {
                 try (ResultSet rs = stmt.executeQuery("SELECT nick FROM clients WHERE login='" + login + "' AND password='" + pass + "';")) {
 
                     while (rs.next()) {
-                        System.out.println("Подключился 0 " );
                         nick = rs.getString("nick");
+                        System.out.println("Авторизовался " + nick);
                     }
-                    System.out.println("Подключился 1 " + nick);
+
+                    if (nick != null) {
+                        ClientHandler.sendMsg(new FileRequest("_auth true"));
+                    } else {
+                        ClientHandler.sendMsg(new FileRequest("_auth false"));
+                    }
+
                 } catch (SQLException e) {
                     System.out.println("Подключился 2 " + nick);
+                    //todo исправить
                 }
-
-                System.out.println("Подключился 3 " + nick);
-
-
             }
 
         } catch (SQLException e) {

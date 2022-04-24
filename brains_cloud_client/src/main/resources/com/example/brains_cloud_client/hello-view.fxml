@@ -1,42 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(#fff 0%,#eee 10%, #ddd 90%, #bbb 100%);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brains_cloud_client.HelloController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="400.0" style="-fx-background-color: linear-gradient(#fff 0%,#eee 10%, #ddd 90%, #bbb 100%);"
+      xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.brains_cloud_client.HelloController">
     <children>
         <MenuBar>
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Close"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" text="Delete"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" text="About"/>
                     </items>
                 </Menu>
             </menus>
@@ -47,24 +36,39 @@
                     <children>
                         <ImageView fitHeight="23.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@folder.png" />
+                                <Image url="@folder.png"/>
                             </image>
                             <HBox.margin>
-                                <Insets left="5.0" top="10.0" />
+                                <Insets left="5.0" top="10.0"/>
                             </HBox.margin>
                         </ImageView>
-                        <Label fx:id="folderClient" prefHeight="19.0" prefWidth="209.0" text="Client's files :" textAlignment="CENTER" underline="true" wrapText="true">
+                        <Label fx:id="folderClient" prefHeight="19.0" prefWidth="209.0" text="Client's files :"
+                               textAlignment="CENTER" underline="true" wrapText="true">
                             <font>
-                                <Font name="Cambria Bold" size="16.0" />
+                                <Font name="Cambria Bold" size="16.0"/>
                             </font>
                             <HBox.margin>
-                                <Insets left="10.0" top="10.0" />
+                                <Insets left="10.0" top="10.0"/>
                             </HBox.margin>
                         </Label>
                     </children>
                 </HBox>
                 <HBox fx:id="cloudPanel1" prefHeight="240" prefWidth="400.0">
                     <children>
+                        <!--<TableView fx:id="filesList" prefHeight="220.0" prefWidth="287.0">
+                            <columns>
+                                <TableColumn fx:id="filesListName" prefWidth="75.0" text="name"/>
+                                <TableColumn prefWidth="75.0" text="size"/>
+                                <TableColumn prefWidth="75.0" text="date"/>
+                            </columns>
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </HBox.margin>
+                            <padding>
+                                <Insets bottom="10.0" right="10.0" top="10.0"/>
+                            </padding>
+                        </TableView>-->
+
                         <ListView fx:id="filesList" prefHeight="220.0" prefWidth="287.0">
                             <padding>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -75,74 +79,80 @@
                         </ListView>
                         <Pane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <RadioButton fx:id="downloadRadio" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" selected="true" text="Download">
+                                <RadioButton fx:id="downloadRadio" layoutX="30.0" layoutY="30.0" mnemonicParsing="false"
+                                             selected="true" text="Download">
                                     <font>
-                                        <Font name="Cambria Bold" size="14.0" />
+                                        <Font name="Cambria Bold" size="14.0"/>
                                     </font>
                                     <toggleGroup>
-                                        <ToggleGroup fx:id="group" />
+                                        <ToggleGroup fx:id="group"/>
                                     </toggleGroup>
 
                                 </RadioButton>
-                                <RadioButton fx:id="sendRadio" layoutX="30.0" layoutY="59.0" mnemonicParsing="false" text="Send">
+                                <RadioButton fx:id="sendRadio" layoutX="30.0" layoutY="59.0" mnemonicParsing="false"
+                                             text="Send">
                                     <font>
-                                        <Font name="Cambria Bold" size="14.0" />
+                                        <Font name="Cambria Bold" size="14.0"/>
                                     </font>
                                     <toggleGroup>
-                                        <fx:reference source="group" />
+                                        <fx:reference source="group"/>
                                     </toggleGroup>
                                 </RadioButton>
-                                <RadioButton fx:id="viewRadio" layoutX="30.0" layoutY="88.0" mnemonicParsing="false" text="View">
+                                <RadioButton fx:id="viewRadio" layoutX="30.0" layoutY="88.0" mnemonicParsing="false"
+                                             text="View">
                                     <font>
-                                        <Font name="Cambria Bold" size="14.0" />
+                                        <Font name="Cambria Bold" size="14.0"/>
                                     </font>
                                     <toggleGroup>
-                                        <fx:reference source="group" />
+                                        <fx:reference source="group"/>
                                     </toggleGroup>
                                 </RadioButton>
-                                <RadioButton fx:id="deleteRadio" layoutX="30.0" layoutY="120.0" mnemonicParsing="false" text="Delete">
+                                <RadioButton fx:id="deleteRadio" layoutX="30.0" layoutY="120.0" mnemonicParsing="false"
+                                             text="Delete">
                                     <font>
-                                        <Font name="Cambria Bold" size="14.0" />
+                                        <Font name="Cambria Bold" size="14.0"/>
                                     </font>
                                     <toggleGroup>
-                                        <fx:reference source="group" />
+                                        <fx:reference source="group"/>
                                     </toggleGroup>
                                 </RadioButton>
-                                <RadioButton fx:id="renameRadio" layoutX="30.0" layoutY="149.0" mnemonicParsing="false" text="Rename">
+                                <RadioButton fx:id="renameRadio" layoutX="30.0" layoutY="149.0" mnemonicParsing="false"
+                                             text="Rename">
                                     <font>
-                                        <Font name="Cambria Bold" size="14.0" />
+                                        <Font name="Cambria Bold" size="14.0"/>
                                     </font>
                                     <toggleGroup>
-                                        <fx:reference source="group" />
+                                        <fx:reference source="group"/>
                                     </toggleGroup>
                                 </RadioButton>
                             </children>
                         </Pane>
                     </children>
                 </HBox>
-                <Label fx:id="textSelectedRadio" prefHeight="17.0" text="Хотите скачать файл из облака?" VBox.vgrow="ALWAYS">
+                <Label fx:id="textSelectedRadio" prefHeight="17.0" text="name" VBox.vgrow="ALWAYS">
                     <VBox.margin>
-                        <Insets bottom="5.0" left="15.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="15.0" right="5.0" top="5.0"/>
                     </VBox.margin>
                     <font>
-                        <Font name="Cambria" size="14.0" />
+                        <Font name="Cambria" size="14.0"/>
                     </font>
                 </Label>
                 <HBox fx:id="cloudPanel2" prefHeight="104.0" prefWidth="398.0">
                     <children>
                         <TextArea fx:id="addressBar" editable="true" prefHeight="89.0" prefWidth="296.0">
                             <HBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </HBox.margin>
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </padding>
                         </TextArea>
                         <Pane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <Button fx:id="enterButton" layoutX="7.0" layoutY="15.0" mnemonicParsing="false" onAction="#onClickButton" prefHeight="55.0" prefWidth="115.0" text="Enter">
+                                <Button fx:id="enterButton" layoutX="7.0" layoutY="15.0" mnemonicParsing="false"
+                                        onAction="#onClickButton" prefHeight="55.0" prefWidth="115.0" text="Enter">
                                     <font>
-                                        <Font name="Cambria Bold" size="14.0" />
+                                        <Font name="Cambria Bold" size="14.0"/>
                                     </font>
                                 </Button>
                             </children>
@@ -155,47 +165,51 @@
             <HBox>
                 <Label contentDisplay="CENTER" minWidth="100.0" prefHeight="20.0" prefWidth="100.0" text="Login:">
                     <font>
-                        <Font name="Cambria Bold" size="16.0" />
+                        <Font name="Cambria Bold" size="16.0"/>
                     </font>
                     <HBox.margin>
-                        <Insets left="10.0" top="20.0" />
+                        <Insets left="10.0" top="20.0"/>
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="userName" prefHeight="25.0" prefWidth="304.0" promptText="Укажите свой ник" HBox.hgrow="ALWAYS">
+                <TextField fx:id="userLogin" prefHeight="25.0" prefWidth="304.0" promptText="Укажите свой ник"
+                           HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="20.0"/>
                     </HBox.margin>
                 </TextField>
             </HBox>
             <HBox>
                 <Label minWidth="100.0" prefHeight="20.0" prefWidth="100.0" text="Password:">
                     <font>
-                        <Font name="Cambria Bold" size="16.0" />
+                        <Font name="Cambria Bold" size="16.0"/>
                     </font>
                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
+                        <Insets left="10.0" top="10.0"/>
                     </HBox.margin>
                 </Label>
-                <PasswordField fx:id="userLogin" prefHeight="25.0" prefWidth="312.0" promptText="Укажите логин" HBox.hgrow="ALWAYS">
+                <PasswordField fx:id="userPass" prefHeight="25.0" prefWidth="312.0" promptText="Укажите логин"
+                               HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </HBox.margin>
                 </PasswordField>
             </HBox>
-            <Button alignment="CENTER" onAction="#login" prefHeight="33.0" prefWidth="145.0" text="Enter" textAlignment="CENTER">
+            <Button alignment="CENTER" onAction="#login" prefHeight="33.0" prefWidth="145.0" text="Enter"
+                    textAlignment="CENTER">
                 <font>
-                    <Font name="Cambria Bold" size="16.0" />
+                    <Font name="Cambria Bold" size="16.0"/>
                 </font>
                 <VBox.margin>
-                    <Insets bottom="10.0" left="300.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" left="300.0" right="10.0" top="10.0"/>
                 </VBox.margin>
             </Button>
-            <Hyperlink fx:id="singUp" alignment="CENTER" contentDisplay="CENTER" onAction="#onClickHyperlink" prefHeight="27.0" prefWidth="87.0" text="Sign up" textAlignment="JUSTIFY" textOverrun="CLIP">
+            <Hyperlink fx:id="singUp" alignment="CENTER" contentDisplay="CENTER" onAction="#onClickHyperlink"
+                       prefHeight="27.0" prefWidth="87.0" text="Sign up" textAlignment="JUSTIFY" textOverrun="CLIP">
                 <VBox.margin>
-                    <Insets left="300.0" />
+                    <Insets left="300.0"/>
                 </VBox.margin>
                 <font>
-                    <Font name="Cambria Bold" size="16.0" />
+                    <Font name="Cambria Bold" size="16.0"/>
                 </font>
             </Hyperlink>
         </VBox>
